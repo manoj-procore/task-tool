@@ -1,10 +1,10 @@
 package com.example.TaskTool.repository;
-
-import com.example.TaskTool.model.Comment;
+import com.example.TaskTool.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Repository;
 
-@RequestBody
-public class TaskRepository extends JpaRepository<Comment,Long> {
+
+@Repository
+public interface TaskRepository extends JpaRepository<Task,Long> {
 
 }
