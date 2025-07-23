@@ -59,20 +59,25 @@ public class TaskService {
         return t;
     }
 
-    public void deleteTask(Long id)
+    public Boolean deleteTask(Long id)
     {
         Task t=taskRepository.findById(id).orElse(null);
         if(t!=null)
         {
             t.setDeletedAt(OffsetDateTime.now());
             taskRepository.deleteById(id);
+            return true;
 
         }
+        return false;
 
     }
 
-    public Comment addComment(Comment comment) {
-        return commentRepository.save(comment);
+    public Boolean addComment(Comment comment) {
+         comment.setCreatedAt(OffsetDateTime.now());
+         comment.setUpdatedAt(OffsetDateTime.now());
+         commentRepository.save(comment);
+         return true;
     }
 
     public List<Comment> getComments(Long taskId) {
