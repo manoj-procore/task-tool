@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "task_comments")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
