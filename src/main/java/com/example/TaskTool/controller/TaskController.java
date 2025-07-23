@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:5173") // Vite dev server port
 @RestController
 @RequestMapping("/rest/v1/task_items")
 public class TaskController {
@@ -33,10 +33,11 @@ public class TaskController {
     @Operation(summary = "Create a new task", description = "Adds a new task to the system.")
     @ApiResponse(responseCode = "201", description = "Task created successfully")
     @PostMapping
-    public ResponseEntity<Void> createTask(@RequestBody Task task) {
-        taskService.save(task);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        Task createdTask = taskService.save(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
+
 
     @Operation(summary = "Get task by ID", description = "Retrieves a specific task by its ID.")
     @ApiResponses(value = {

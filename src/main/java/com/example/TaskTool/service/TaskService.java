@@ -27,11 +27,12 @@ public class TaskService {
 
     }
 
-    public void save(Task task)
+    public Task save(Task task)
     {
         task.setCreatedAt(OffsetDateTime.now());
         task.setUpdatedAt(OffsetDateTime.now());
-        taskRepository.save(task);
+        return taskRepository.save(task);
+
     }
 
     public Optional<Task> getById(Long id)
@@ -39,25 +40,44 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public  Task updateTask( Long id,Task task)
-    {
-        Task t=taskRepository.findById(id).orElse(null);
-        if(t!=null)
-        {
-            t.setDescription(t.getDescription().isEmpty()?task.getDescription():t.getDescription());
-            t.setNumber(t.getNumber().isEmpty()?task.getNumber():t.getNumber());
-            t.setAssignee(t.getAssignee().isEmpty()?task.getAssignee():t.getAssignee());
-            task.setUpdatedAt(OffsetDateTime.now());
-            t.setDescriptionRichText(t.getDescriptionRichText().isEmpty()?task.getDescriptionRichText():t.getDescriptionRichText());
-            t.setDescription(task.getDescription().isEmpty()?task.getDescription():t.getDescription());
-            t.setTitle(task.getTitle().isEmpty()?task.getTitle():t.getTitle());
-            t.setDueDate(task.getDueDate());
-            t.setPriority(task.getPriority().isEmpty()?task.getPriority():t.getPriority());
+    public Task updateTask(Long id, Task task) {
+        Task t = taskRepository.findById(id).orElse(null);
+        if (t != null) {
+            if (task.getDescription() != null && !task.getDescription().isEmpty()) {
+                t.setDescription(task.getDescription());
+            }
+
+            if (task.getNumber() != null && !task.getNumber().isEmpty()) {
+                t.setNumber(task.getNumber());
+            }
+
+            if (task.getAssignee() != null && !task.getAssignee().isEmpty()) {
+                t.setAssignee(task.getAssignee());
+            }
+
+            if (task.getDescriptionRichText() != null && !task.getDescriptionRichText().isEmpty()) {
+                t.setDescriptionRichText(task.getDescriptionRichText());
+            }
+
+            if (task.getTitle() != null && !task.getTitle().isEmpty()) {
+                t.setTitle(task.getTitle());
+            }
+
+            if (task.getDueDate() != null) {
+                t.setDueDate(task.getDueDate());
+            }
+
+            if (task.getPriority() != null && !task.getPriority().isEmpty()) {
+                t.setPriority(task.getPriority());
+            }
+
+            t.setUpdatedAt(OffsetDateTime.now());
             taskRepository.save(t);
         }
 
         return t;
     }
+
 
     public Boolean deleteTask(Long id)
     {
