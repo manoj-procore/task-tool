@@ -75,5 +75,8 @@ public class TaskService {
         return commentRepository.save(comment);
     }
 
+    public List<Comment> getComments(Long taskId) {
+       return commentRepository.findByTaskItemId(taskId);
+    }
 
 }

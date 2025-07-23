@@ -50,5 +50,11 @@ public class TaskController {
 
     }
 
+    @GetMapping("/{taskId}/comment")
+    public List<Comment>  getTaskComments(@PathVariable Long taskId)
+    {
+      return  taskService.getComments(taskId);
+    }
+
 
 }
