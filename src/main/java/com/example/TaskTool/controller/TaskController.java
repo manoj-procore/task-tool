@@ -1,4 +1,5 @@
 package com.example.TaskTool.controller;
+import com.example.TaskTool.model.Comment;
 import com.example.TaskTool.model.Task;
 import com.example.TaskTool.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,20 @@ public class TaskController {
     public Task updateTask(@PathVariable Long id,@RequestBody Task task)
     {
      return  taskService.updateTask(id, task);
-
     }
 
     @DeleteMapping("/task/{id}")
     public void deleteTask(@PathVariable Long id)
     {
          taskService.deleteTask(id);
+    }
+
+    @PostMapping("/{taskId}/comment")
+    public void addComment(@PathVariable Long taskId,@RequestBody Comment comment)
+    {
+        comment.setTaskItemId(taskId);
+        taskService.addComment(comment);
+
     }
 
 

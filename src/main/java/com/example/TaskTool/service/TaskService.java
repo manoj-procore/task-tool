@@ -1,5 +1,6 @@
 package com.example.TaskTool.service;
 
+import com.example.TaskTool.model.Comment;
 import com.example.TaskTool.model.Task;
 import com.example.TaskTool.repository.CommentRepository;
 import com.example.TaskTool.repository.TaskRepository;
@@ -15,6 +16,7 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
 
     @Autowired
     private CommentRepository commentRepository;
@@ -37,7 +39,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public Task updateTask( Long id,Task task)
+    public  Task updateTask( Long id,Task task)
     {
         Task t=taskRepository.findById(id).orElse(null);
         if(t!=null)
@@ -45,13 +47,16 @@ public class TaskService {
             t.setDescription(t.getDescription().isEmpty()?task.getDescription():t.getDescription());
             t.setNumber(t.getNumber().isEmpty()?task.getNumber():t.getNumber());
             t.setAssignee(t.getAssignee().isEmpty()?task.getAssignee():t.getAssignee());
-            t.setUpdatedAt(task.getUpdatedAt());
+            task.setUpdatedAt(OffsetDateTime.now());
             t.setDescriptionRichText(t.getDescriptionRichText().isEmpty()?task.getDescriptionRichText():t.getDescriptionRichText());
             t.setDescription(task.getDescription().isEmpty()?task.getDescription():t.getDescription());
             t.setTitle(task.getTitle().isEmpty()?task.getTitle():t.getTitle());
+            t.setDueDate(task.getDueDate());
+            t.setPriority(task.getPriority().isEmpty()?task.getPriority():t.getPriority());
+            taskRepository.save(t);
         }
-        taskRepository.save(task);
-        return task;
+
+        return t;
     }
 
     public void deleteTask(Long id)
@@ -64,6 +69,10 @@ public class TaskService {
 
         }
 
+    }
+
+    public Comment addComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 
 
